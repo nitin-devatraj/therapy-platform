@@ -5,9 +5,9 @@ import {
   nextPage,
   updatePreliminaryAssessment,
 } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function AreasForChangeQuestion() {
+export default function PersonalChallengesQuestion() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const dispatch = useDispatch();
 
@@ -22,24 +22,29 @@ export default function AreasForChangeQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ areasForChange: selectedOptions }));
-    // dispatch(nextPage());
+    dispatch(
+      updatePreliminaryAssessment({ personalChallenges: selectedOptions })
+    );
+    dispatch(nextPage());
   };
 
   const question =
-    "8. What areas of your life do you hope to experience positive changes in?";
+    "Sometimes we develop habits or behaviours that no longer serve us well. We'll ask about that next, but there's no need to share anything you're not comfortable with. Do any of the following apply to challenges you may be facing currently?";
+  const questionNo = "6. ";
   const options = [
-    "Work/Career",
-    "Relationships",
-    "Physical health",
-    "Emotional/mental health",
-    "Developing new skills/habits",
+    "Alcohol or substance use",
+    "Issues related to eating habits",
+    "Compulsive sexual behaviours",
     "Other",
+    "Prefer not to answer",
   ];
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOptions.includes(option) ? classes.optionBtnSelected : ""

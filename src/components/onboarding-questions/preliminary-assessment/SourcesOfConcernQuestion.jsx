@@ -5,7 +5,7 @@ import {
   nextPage,
   updatePreliminaryAssessment,
 } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
 export default function SourcesOfConcernQuestion() {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -29,7 +29,8 @@ export default function SourcesOfConcernQuestion() {
   };
 
   const question =
-    "5. People's well-being can be impacted by various areas of life. Which of the following, if any, are sources of concern for you currently?";
+    "People's well-being can be impacted by various areas of life. Which of the following, if any, are sources of concern for you currently?";
+  const questionNo = "5. ";
   const options = [
     "Work/Career",
     "Finances",
@@ -41,7 +42,10 @@ export default function SourcesOfConcernQuestion() {
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOptions.includes(option) ? classes.optionBtnSelected : ""

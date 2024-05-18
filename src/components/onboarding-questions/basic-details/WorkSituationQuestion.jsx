@@ -2,9 +2,9 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function LivingSituationQuestion() {
+export default function WorkSituationQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -13,22 +13,28 @@ export default function LivingSituationQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ livingSituation: selectedOption }));
+    dispatch(updateBasicDetails({ workSituation: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question = "3. What best describes your current living situation?";
+  const question = "What best describes your current work situation?";
+  const questionNo = "5. ";
   const options = [
-    "Living alone",
-    "Living with partner/spouse",
-    "Living with roommates (Friends)",
-    "Living with roommates (Acquaintances)",
-    "Living with family members",
+    "Employed in a multinational company (MNC)",
+    "Employed in the private sector (non-MNC)",
+    "Employed in the government/public sector",
+    "Self-employed/Running a business",
+    "Freelancer/Consultant",
+    "Unemployed and looking for work",
+    "Student",
   ];
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""

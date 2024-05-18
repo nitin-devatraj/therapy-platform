@@ -1,10 +1,13 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import classes from "../OnboardingQuestions.module.scss";
-import { nextPage, updateBasicDetails } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import {
+  nextPage,
+  updatePreliminaryAssessment,
+} from "../../../store/formSlice";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function AgeQuestion() {
+export default function MotivationQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -13,16 +16,27 @@ export default function AgeQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ age: selectedOption }));
+    dispatch(updatePreliminaryAssessment({ motivation: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question = "1. How old are you? please select a range.";
-  const options = ["15-19", "20-24", "25-29", "30-39", "40-49", "50+"];
+  const question =
+    "On a scale of 0 to 10, how motivated are you to start making positive changes to improve your overall well-being at this time?";
+  const questionNo = "7. ";
+  const options = [
+    "Not motivated at all",
+    "Slightly motivated",
+    "Moderately motivated",
+    "Very motivated",
+    "Extremely motivated",
+  ].reverse();
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""
@@ -39,7 +53,6 @@ export default function AgeQuestion() {
           </button>
         );
       })}
-
       <button className={classes.submitBtn} onClick={handleSubmitClick}>
         Submit
       </button>

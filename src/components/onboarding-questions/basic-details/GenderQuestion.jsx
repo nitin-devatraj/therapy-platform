@@ -1,13 +1,10 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import classes from "../OnboardingQuestions.module.scss";
-import {
-  nextPage,
-  updatePreliminaryAssessment,
-} from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import { nextPage, updateBasicDetails } from "../../../store/formSlice";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function SocialSupportQuestion() {
+export default function GenderQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -16,23 +13,21 @@ export default function SocialSupportQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ socialSupport: selectedOption }));
+    dispatch(updateBasicDetails({ gender: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question =
-    "4. It's common to have ups and downs in relationships. How satisfied are you with your current social support and connections?";
-  const options = [
-    "Very Dissatisfied",
-    "Dissatisfied",
-    "Neutral",
-    "Satisfied",
-    "Very Satisfied",
-  ];
+  const question = "How would you describe your gender identity?";
+  const questionNo = "2. ";
+  const options = ["Man", "Woman", "Non-binary", "Prefer not to say"];
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
+
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""

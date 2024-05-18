@@ -1,22 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
 import { nextPage, previousPage } from "./store/formSlice";
 import classes from "./App.module.scss";
-import BasicWelcomePage from "./components/OnboardingQuestions/BasicDetails/WelcomePage";
-import AgeQuestion from "./components/OnboardingQuestions/BasicDetails/AgeQuestion";
-import GenderQuestion from "./components/OnboardingQuestions/BasicDetails/GenderQuestion";
-import LivingSituationQuestion from "./components/OnboardingQuestions/BasicDetails/LivingSituationQuestion";
-import PhysicalHealthQuestion from "./components/OnboardingQuestions/BasicDetails/PhysicalHealthQuestion";
-import WorkSituationQuestion from "./components/OnboardingQuestions/BasicDetails/WorkSituationQuestion";
-import RelationshipStatusQuestion from "./components/OnboardingQuestions/BasicDetails/RelationshipStatusQuestion";
-import PreliminaryWelcomePage from "./components/OnboardingQuestions/PreliminaryAssessment/WelcomePage";
-import FeelingQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/FeelingQuestion";
-import ChallengesQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/ChallengesQuestion";
-import StressFrequencyQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/StressFrequencyQuestion";
-import SocialSupportQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/SocialSupportQuestion";
-import SourcesOfConcernQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/SourcesOfConcernQuestion";
-import PersonalChallengesQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/PersonalChallengesQuestion";
-import MotivationQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/MotivationQuestion";
-import AreasForChangeQuestion from "./components/OnboardingQuestions/PreliminaryAssessment/AreasForChangeQuestion";
+import BasicWelcomePage from "./components/onboarding-questions/basic-details/WelcomePage";
+import AgeQuestion from "./components/onboarding-questions/basic-details/AgeQuestion";
+import GenderQuestion from "./components/onboarding-questions/basic-details/GenderQuestion";
+import LivingSituationQuestion from "./components/onboarding-questions/basic-details/LivingSituationQuestion";
+import PhysicalHealthQuestion from "./components/onboarding-questions/basic-details/PhysicalHealthQuestion";
+import WorkSituationQuestion from "./components/onboarding-questions/basic-details/WorkSituationQuestion";
+import RelationshipStatusQuestion from "./components/onboarding-questions/basic-details/RelationshipStatusQuestion";
+import PreliminaryWelcomePage from "./components/onboarding-questions/preliminary-assessment/WelcomePage";
+import FeelingQuestion from "./components/onboarding-questions/preliminary-assessment/FeelingQuestion";
+import ChallengesQuestion from "./components/onboarding-questions/preliminary-assessment/ChallengesQuestion";
+import StressFrequencyQuestion from "./components/onboarding-questions/preliminary-assessment/StressFrequencyQuestion";
+import SocialSupportQuestion from "./components/onboarding-questions/preliminary-assessment/SocialSupportQuestion";
+import SourcesOfConcernQuestion from "./components/onboarding-questions/preliminary-assessment/SourcesOfConcernQuestion";
+import PersonalChallengesQuestion from "./components/onboarding-questions/preliminary-assessment/PersonalChallengesQuestion";
+import MotivationQuestion from "./components/onboarding-questions/preliminary-assessment/MotivationQuestion";
+import AreasForChangeQuestion from "./components/onboarding-questions/preliminary-assessment/AreasForChangeQuestion";
 
 export default function App() {
   const currentPage = useSelector((state) => state.form.currentPage);

@@ -5,7 +5,7 @@ import {
   nextPage,
   updatePreliminaryAssessment,
 } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
 export default function StressFrequencyQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
@@ -21,11 +21,22 @@ export default function StressFrequencyQuestion() {
   };
 
   const question =
-    "3. Many people experience periods of feeling down or stressed. Over the last 2 weeks, how often have you experienced significant stress, anxiety or low mood?";
-  const options = ["Never", "Rarely", "Sometimes", "Often", "Almost Daily"];
+    "Many people experience periods of feeling down or stressed. Over the last 2 weeks, how often have you experienced significant stress, anxiety or low mood?";
+  const questionNo = "3. ";
+  const options = [
+    "Never",
+    "Rarely",
+    "Sometimes",
+    "Often",
+    "Almost Daily",
+  ].reverse();
+
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""

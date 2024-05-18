@@ -20,11 +20,15 @@ export default function ChallengesQuestion() {
   };
 
   const question =
-    "2. To understand your experiences more fully, we have a few other questions. In your own words, what's been on your mind or challenging for you recently?";
+    "To understand your experiences more fully, we have a few other questions. In your own words, what's been on your mind or challenging for you recently?";
+  const questionNo = "2. ";
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       <textarea
         onChange={handleOptionChange}
         className={classes.multiLineTextBox}

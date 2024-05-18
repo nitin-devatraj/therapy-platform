@@ -2,9 +2,9 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function GenderQuestion() {
+export default function AgeQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -13,16 +13,20 @@ export default function GenderQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ gender: selectedOption }));
+    dispatch(updateBasicDetails({ age: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question = "2. How would you describe your gender identity?";
-  const options = ["Man", "Woman", "Non-binary", "Prefer not to say"];
+  const question = "How old are you? please select a range.";
+  const questionNo = "1. ";
+  const options = ["15-19", "20-24", "25-29", "30-39", "40-49", "50+"];
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""
@@ -39,6 +43,7 @@ export default function GenderQuestion() {
           </button>
         );
       })}
+
       <button className={classes.submitBtn} onClick={handleSubmitClick}>
         Submit
       </button>

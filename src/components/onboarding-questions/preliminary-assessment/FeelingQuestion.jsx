@@ -1,10 +1,13 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import classes from "../OnboardingQuestions.module.scss";
-import { nextPage, updateBasicDetails } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import {
+  nextPage,
+  updatePreliminaryAssessment,
+} from "../../../store/formSlice";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function WorkSituationQuestion() {
+export default function FeelingQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -13,24 +16,26 @@ export default function WorkSituationQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ workSituation: selectedOption }));
+    dispatch(updatePreliminaryAssessment({ feelings: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question = "5. What best describes your current work situation?";
+  const question = "How have you been feeling lately?";
+  const questionNo = "1. ";
   const options = [
-    "Employed in a multinational company (MNC)",
-    "Employed in the private sector (non-MNC)",
-    "Employed in the government/public sector",
-    "Self-employed/Running a business",
-    "Freelancer/Consultant",
-    "Unemployed and looking for work",
-    "Student",
-  ];
+    "Struggling",
+    "Could be Better",
+    "Neutral",
+    "Doing Okay",
+    "Doing Well",
+  ].reverse();
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""

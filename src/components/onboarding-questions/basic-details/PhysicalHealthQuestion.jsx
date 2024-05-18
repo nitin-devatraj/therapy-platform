@@ -2,9 +2,9 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function RelationshipStatusQuestion() {
+export default function PhysicalHealthQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -13,23 +13,20 @@ export default function RelationshipStatusQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ relationshipStatus: selectedOption }));
+    dispatch(updateBasicDetails({ physicalHealth: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question =
-    "6. How would you describe your current romantic relationship situation?";
-  const options = [
-    "In a committed long-term relationship/married",
-    "In a relationship, but long-distance",
-    "In a newer/casual relationship",
-    "Single and not actively dating",
-    "Prefer not to answer",
-  ];
+  const question = "How would you rate your overall physical health currently?";
+  const questionNo = "4. ";
+  const options = ["Excellent", "Good", "Fair", "Poor"];
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""

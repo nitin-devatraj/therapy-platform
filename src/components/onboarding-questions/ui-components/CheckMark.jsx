@@ -1,4 +1,4 @@
-import classes from "./OnboardingQuestions.module.scss";
+import classes from "../OnboardingQuestions.module.scss";
 
 export default function CheckMark() {
   return (

@@ -5,9 +5,9 @@ import {
   nextPage,
   updatePreliminaryAssessment,
 } from "../../../store/formSlice";
-import CheckMark from "../CheckMark";
+import CheckMark from "../ui-components/CheckMark";
 
-export default function FeelingQuestion() {
+export default function SocialSupportQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
 
@@ -16,22 +16,27 @@ export default function FeelingQuestion() {
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ feelings: selectedOption }));
+    dispatch(updatePreliminaryAssessment({ socialSupport: selectedOption }));
     dispatch(nextPage());
   };
 
-  const question = "1. How have you been feeling lately?";
+  const question =
+    "It's common to have ups and downs in relationships. How satisfied are you with your current social support and connections?";
+  const questionNo = "4. ";
   const options = [
-    "Struggling",
-    "Could be Better",
+    "Very Dissatisfied",
+    "Dissatisfied",
     "Neutral",
-    "Doing Okay",
-    "Doing Well",
-  ];
+    "Satisfied",
+    "Very Satisfied",
+  ].reverse();
 
   return (
     <div className={classes.container}>
-      <p className={classes.question}>{question}</p>
+      <div className={classes.questionContainer}>
+        <span>{questionNo}</span>
+        <p className={classes.question}>{question}</p>
+      </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
           selectedOption === option ? classes.optionBtnSelected : ""
