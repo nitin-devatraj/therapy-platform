@@ -1,19 +1,19 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function WorkSituationQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const workSituation = useSelector(
+    (state) => state.form.basicDetails.workSituation
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updateBasicDetails({ workSituation: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ workSituation: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -37,7 +37,7 @@ export default function WorkSituationQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          workSituation === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -47,7 +47,7 @@ export default function WorkSituationQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {workSituation === option && <CheckMark />}
           </button>
         );
       })}

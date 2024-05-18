@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -7,15 +6,16 @@ import {
 } from "../../../store/formSlice";
 
 export default function ChallengesQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const challenges = useSelector(
+    (state) => state.form.preliminaryAssessment.challenges
+  );
 
   const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
+    dispatch(updatePreliminaryAssessment({ challenges: e.target.value }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ challenges: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -32,6 +32,7 @@ export default function ChallengesQuestion() {
       <textarea
         onChange={handleOptionChange}
         className={classes.multiLineTextBox}
+        value={challenges}
       ></textarea>
       <button className={classes.submitBtn} onClick={handleSubmitClick}>
         Submit

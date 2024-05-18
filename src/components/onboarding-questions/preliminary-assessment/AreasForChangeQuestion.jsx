@@ -1,28 +1,32 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
-import {
-  nextPage,
-  updatePreliminaryAssessment,
-} from "../../../store/formSlice";
+import { updatePreliminaryAssessment } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function AreasForChangeQuestion() {
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const dispatch = useDispatch();
+  const areasForChange = useSelector(
+    (state) => state.form.preliminaryAssessment.areasForChange
+  );
 
   const handleOptionClick = (option) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions((selectedOptions) =>
-        selectedOptions.filter((item) => item !== option)
+    if (areasForChange.includes(option)) {
+      const newAreasForChange = areasForChange.filter(
+        (item) => item !== option
+      );
+      dispatch(
+        updatePreliminaryAssessment({ areasForChange: newAreasForChange })
       );
     } else {
-      setSelectedOptions((selectedOptions) => [...selectedOptions, option]);
+      dispatch(
+        updatePreliminaryAssessment({
+          areasForChange: [...areasForChange, option],
+        })
+      );
     }
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ areasForChange: selectedOptions }));
     // dispatch(nextPage());
   };
 
@@ -46,7 +50,7 @@ export default function AreasForChangeQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOptions.includes(option) ? classes.optionBtnSelected : ""
+          areasForChange.includes(option) ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -56,7 +60,7 @@ export default function AreasForChangeQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOptions.includes(option) && <CheckMark />}
+            {areasForChange.includes(option) && <CheckMark />}
           </button>
         );
       })}

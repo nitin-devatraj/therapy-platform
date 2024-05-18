@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -8,15 +7,16 @@ import {
 import CheckMark from "../ui-components/CheckMark";
 
 export default function FeelingQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const feelings = useSelector(
+    (state) => state.form.preliminaryAssessment.feelings
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updatePreliminaryAssessment({ feelings: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ feelings: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -38,7 +38,7 @@ export default function FeelingQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          feelings === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -48,7 +48,7 @@ export default function FeelingQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {feelings === option && <CheckMark />}
           </button>
         );
       })}

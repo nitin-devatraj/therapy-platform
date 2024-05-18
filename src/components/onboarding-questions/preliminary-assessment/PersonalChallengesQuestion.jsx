@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -8,23 +7,31 @@ import {
 import CheckMark from "../ui-components/CheckMark";
 
 export default function PersonalChallengesQuestion() {
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const dispatch = useDispatch();
+  const personalChallenges = useSelector(
+    (state) => state.form.preliminaryAssessment.personalChallenges
+  );
 
   const handleOptionClick = (option) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions((selectedOptions) =>
-        selectedOptions.filter((item) => item !== option)
+    if (personalChallenges.includes(option)) {
+      const newPersonalChallenges = personalChallenges.filter(
+        (item) => item !== option
+      );
+      dispatch(
+        updatePreliminaryAssessment({
+          personalChallenges: newPersonalChallenges,
+        })
       );
     } else {
-      setSelectedOptions((selectedOptions) => [...selectedOptions, option]);
+      dispatch(
+        updatePreliminaryAssessment({
+          personalChallenges: [...personalChallenges, option],
+        })
+      );
     }
   };
 
   const handleSubmitClick = () => {
-    dispatch(
-      updatePreliminaryAssessment({ personalChallenges: selectedOptions })
-    );
     dispatch(nextPage());
   };
 
@@ -47,7 +54,7 @@ export default function PersonalChallengesQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOptions.includes(option) ? classes.optionBtnSelected : ""
+          personalChallenges.includes(option) ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -57,7 +64,7 @@ export default function PersonalChallengesQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOptions.includes(option) && <CheckMark />}
+            {personalChallenges.includes(option) && <CheckMark />}
           </button>
         );
       })}

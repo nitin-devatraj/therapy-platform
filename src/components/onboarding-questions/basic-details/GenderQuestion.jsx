@@ -1,19 +1,17 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function GenderQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const gender = useSelector((state) => state.form.basicDetails.gender);
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updateBasicDetails({ gender: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ gender: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -30,7 +28,7 @@ export default function GenderQuestion() {
 
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          gender === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -40,7 +38,7 @@ export default function GenderQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {gender === option && <CheckMark />}
           </button>
         );
       })}

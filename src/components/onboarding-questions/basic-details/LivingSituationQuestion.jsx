@@ -1,19 +1,19 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function LivingSituationQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const livingSituation = useSelector(
+    (state) => state.form.basicDetails.livingSituation
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updateBasicDetails({ livingSituation: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ livingSituation: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -35,7 +35,7 @@ export default function LivingSituationQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          livingSituation === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -45,7 +45,7 @@ export default function LivingSituationQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {livingSituation === option && <CheckMark />}
           </button>
         );
       })}

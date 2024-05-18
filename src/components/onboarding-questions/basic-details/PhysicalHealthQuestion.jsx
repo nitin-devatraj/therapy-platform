@@ -1,19 +1,19 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function PhysicalHealthQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const physicalHealth = useSelector(
+    (state) => state.form.basicDetails.physicalHealth
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updateBasicDetails({ physicalHealth: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ physicalHealth: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -29,7 +29,7 @@ export default function PhysicalHealthQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          physicalHealth === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -39,7 +39,7 @@ export default function PhysicalHealthQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {physicalHealth === option && <CheckMark />}
           </button>
         );
       })}

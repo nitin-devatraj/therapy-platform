@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -8,15 +7,16 @@ import {
 import CheckMark from "../ui-components/CheckMark";
 
 export default function MotivationQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const motivation = useSelector(
+    (state) => state.form.preliminaryAssessment.motivation
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updatePreliminaryAssessment({ motivation: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ motivation: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -39,7 +39,7 @@ export default function MotivationQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          motivation === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -49,7 +49,7 @@ export default function MotivationQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {motivation === option && <CheckMark />}
           </button>
         );
       })}

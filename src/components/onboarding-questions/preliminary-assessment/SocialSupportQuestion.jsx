@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -8,15 +7,16 @@ import {
 import CheckMark from "../ui-components/CheckMark";
 
 export default function SocialSupportQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const socialSupport = useSelector(
+    (state) => state.form.preliminaryAssessment.socialSupport
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updatePreliminaryAssessment({ socialSupport: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ socialSupport: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -39,7 +39,7 @@ export default function SocialSupportQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          socialSupport === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -49,7 +49,7 @@ export default function SocialSupportQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {socialSupport === option && <CheckMark />}
           </button>
         );
       })}

@@ -41,7 +41,6 @@ const formSlice = createSlice({
         ...state.preliminaryAssessment,
         ...action.payload,
       };
-      console.log(state.preliminaryAssessment);
     },
   },
 });

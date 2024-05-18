@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -8,15 +7,16 @@ import {
 import CheckMark from "../ui-components/CheckMark";
 
 export default function StressFrequencyQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const stressFrequency = useSelector(
+    (state) => state.form.preliminaryAssessment.stressFrequency
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updatePreliminaryAssessment({ stressFrequency: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updatePreliminaryAssessment({ stressFrequency: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -39,7 +39,7 @@ export default function StressFrequencyQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          stressFrequency === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -49,7 +49,7 @@ export default function StressFrequencyQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {stressFrequency === option && <CheckMark />}
           </button>
         );
       })}

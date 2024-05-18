@@ -1,19 +1,17 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function AgeQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const age = useSelector((state) => state.form.basicDetails.age);
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updateBasicDetails({ age: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ age: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -29,7 +27,7 @@ export default function AgeQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          age === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -39,7 +37,7 @@ export default function AgeQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {age === option && <CheckMark />}
           </button>
         );
       })}

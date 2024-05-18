@@ -1,19 +1,19 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import { nextPage, updateBasicDetails } from "../../../store/formSlice";
 import CheckMark from "../ui-components/CheckMark";
 
 export default function RelationshipStatusQuestion() {
-  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const relationshipStatus = useSelector(
+    (state) => state.form.basicDetails.relationshipStatus
+  );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    dispatch(updateBasicDetails({ relationshipStatus: option }));
   };
 
   const handleSubmitClick = () => {
-    dispatch(updateBasicDetails({ relationshipStatus: selectedOption }));
     dispatch(nextPage());
   };
 
@@ -36,7 +36,7 @@ export default function RelationshipStatusQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOption === option ? classes.optionBtnSelected : ""
+          relationshipStatus === option ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -46,7 +46,7 @@ export default function RelationshipStatusQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOption === option && <CheckMark />}
+            {relationshipStatus === option && <CheckMark />}
           </button>
         );
       })}

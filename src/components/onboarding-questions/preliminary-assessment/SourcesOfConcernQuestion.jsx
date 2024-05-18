@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../OnboardingQuestions.module.scss";
 import {
   nextPage,
@@ -8,23 +7,29 @@ import {
 import CheckMark from "../ui-components/CheckMark";
 
 export default function SourcesOfConcernQuestion() {
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const dispatch = useDispatch();
+  const sourcesOfConcern = useSelector(
+    (state) => state.form.preliminaryAssessment.sourcesOfConcern
+  );
 
   const handleOptionClick = (option) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions((selectedOptions) =>
-        selectedOptions.filter((item) => item !== option)
+    if (sourcesOfConcern.includes(option)) {
+      const newSourcesOfConcern = sourcesOfConcern.filter(
+        (item) => item !== option
+      );
+      dispatch(
+        updatePreliminaryAssessment({ sourcesOfConcern: newSourcesOfConcern })
       );
     } else {
-      setSelectedOptions((selectedOptions) => [...selectedOptions, option]);
+      dispatch(
+        updatePreliminaryAssessment({
+          sourcesOfConcern: [...sourcesOfConcern, option],
+        })
+      );
     }
   };
 
   const handleSubmitClick = () => {
-    dispatch(
-      updatePreliminaryAssessment({ sourcesOfConcern: selectedOptions })
-    );
     dispatch(nextPage());
   };
 
@@ -48,7 +53,7 @@ export default function SourcesOfConcernQuestion() {
       </div>
       {options.map((option) => {
         const combinedClasses = `${classes.optionBtn} ${
-          selectedOptions.includes(option) ? classes.optionBtnSelected : ""
+          sourcesOfConcern.includes(option) ? classes.optionBtnSelected : ""
         }`;
 
         return (
@@ -58,7 +63,7 @@ export default function SourcesOfConcernQuestion() {
             onClick={() => handleOptionClick(option)}
           >
             {option}
-            {selectedOptions.includes(option) && <CheckMark />}
+            {sourcesOfConcern.includes(option) && <CheckMark />}
           </button>
         );
       })}
